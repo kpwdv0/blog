@@ -1,0 +1,41 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About kira w.">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        <h1 style="font-size:1.6rem;margin-bottom:0.25rem;">About</h1>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:3rem;">The person behind the blog</p>
+
+        <div class="prose">
+          <p>
+            Hi, I'm Kira. I'm a high school sophomore who does a lot of things —
+            piano, violin, math, CS, textbooks — and is maybe only mediocre at a lot
+            of them, but hey, it's fun.
+          </p>
+          <p>
+            Right now I'm working through Apostol Calculus Vol. 1, jumping between
+            math projects and CS side projects, and trying to build a life I really
+            love. I want to be curious.
+          </p>
+          <p>
+            This blog is a record of things I've worked through and thought about.
+            The math and CS posts are write-ups of things I've learned or built.
+            The essays are thinking out loud.
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            Email: <a href="mailto:kikisadventures37@gmail.com">kikisadventures37@gmail.com</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>

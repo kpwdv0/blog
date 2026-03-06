@@ -1,0 +1,28 @@
+---
+interface Props {
+  category: string;
+  href?: boolean;
+}
+
+const { category, href = true } = Astro.props;
+
+const labels: Record<string, string> = {
+  math: 'Math',
+  cs: 'CS',
+  essays: 'Essays',
+  misc: 'Misc',
+};
+
+const label = labels[category] ?? category;
+const link = href ? `/category/${category}` : undefined;
+---
+
+{link ? (
+  <a href={link} class:list={['category-badge', `cat-${category}`]}>
+    {label}
+  </a>
+) : (
+  <span class:list={['category-badge', `cat-${category}`]}>
+    {label}
+  </span>
+)}

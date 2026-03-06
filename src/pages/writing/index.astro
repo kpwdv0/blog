@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
+const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
+  const year = post.data.date.getFullYear().toString();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
+
+function fmt(date: Date) {
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+---
+
+<BaseLayout title="Writing">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        <h1 class="mb-1" style="font-size:1.6rem;">Writing</h1>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:3rem;">{posts.length} posts</p>
+
+        {years.map((year) => (
+          <div class="year-group">
+            <p class="year-heading">{year}</p>
+            {byYear[year].map((post) => (
+              <div class="post-list-item">
+                <span class="post-list-date">{fmt(post.data.date)}</span>
+                <a href={`/posts/${post.slug}`} class="post-list-title">{post.data.title}</a>
+              </div>
+            ))}
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>

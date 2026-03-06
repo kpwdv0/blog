@@ -1,0 +1,16 @@
+---
+interface Props {
+  label?: string;
+  aspectRatio?: string;
+  class?: string;
+}
+
+const { label = 'Image', aspectRatio = '16/9', class: className = '' } = Astro.props;
+---
+
+<div
+  class:list={['image-placeholder', className]}
+  style={`aspect-ratio: ${aspectRatio};`}
+>
+  <span>{label}</span>
+</div>

@@ -1,0 +1,348 @@
+/* ========================================
+   Custom Properties
+   ======================================== */
+
+:root {
+  --bg: #FFF7ED;
+  --text: #5D4C37;
+  --text-muted: #9C8B7A;
+  --border: rgba(93, 76, 55, 0.15);
+}
+
+/* ========================================
+   Base
+   ======================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Spectral', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  scrollbar-gutter: stable;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', serif;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+a:hover {
+  opacity: 0.6;
+}
+
+/* ========================================
+   Layout Scale
+   ======================================== */
+
+.container { max-width: 1100px; }
+
+/* ========================================
+   Navbar
+   ======================================== */
+
+.blog-navbar {
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-navbar .navbar-brand {
+  font-family: 'Lora', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.blog-navbar .nav-link {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.75rem;
+  transition: color 0.15s;
+}
+
+.blog-navbar .nav-link:hover,
+.blog-navbar .nav-link.active {
+  color: var(--text);
+}
+
+/* ========================================
+   Hero
+   ======================================== */
+
+.hero-section {
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-section h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-section .tagline {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 480px;
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   Post Grid Images
+   ======================================== */
+
+.post-image-link { display: block; }
+
+.post-image-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 3px;
+  transition: opacity 0.15s;
+}
+
+.post-image-link:hover .post-image-placeholder {
+  opacity: 0.7;
+}
+
+/* ========================================
+   Post Items (no card)
+   ======================================== */
+
+.post-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-item-featured {
+  max-width: 640px;
+}
+
+.post-item-title {
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  display: block;
+  transition: opacity 0.15s;
+}
+
+.post-item-title:hover { opacity: 0.55; }
+
+.post-item-excerpt {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========================================
+   Image Placeholder
+   ======================================== */
+
+.image-placeholder {
+  background-color: rgba(93, 76, 55, 0.05);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  min-height: 200px;
+}
+
+/* ========================================
+   Post Meta
+   ======================================== */
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.post-meta .separator { opacity: 0.4; }
+
+/* ========================================
+   Prose
+   ======================================== */
+
+.prose {
+  max-width: 660px;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text);
+}
+
+.prose h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p { margin-bottom: 1.25rem; }
+
+.prose blockquote {
+  border-left: 2px solid var(--border);
+  padding-left: 1.25rem;
+  margin-left: 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.prose pre {
+  background-color: rgba(93, 76, 55, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose code {
+  background-color: rgba(93, 76, 55, 0.07);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.875em;
+}
+
+.prose pre code { background: none; padding: 0; }
+
+.prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+.prose li { margin-bottom: 0.4rem; }
+
+/* ========================================
+   Post Header
+   ======================================== */
+
+.post-header {
+  padding: 2.5rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.post-header h1 {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+/* ========================================
+   Section Labels
+   ======================================== */
+
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+
+.blog-footer {
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* ========================================
+   Writing Page
+   ======================================== */
+
+.year-group { margin-bottom: 2.5rem; }
+
+.year-heading {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.post-list-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 0 1.25rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(93, 76, 55, 0.07);
+  align-items: baseline;
+}
+
+.post-list-item:last-child { border-bottom: none; }
+
+.post-list-date {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-list-title {
+  font-family: 'Lora', serif;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.post-list-title:hover { opacity: 0.6; }
+
+@media (max-width: 576px) {
+  .post-list-item { grid-template-columns: 1fr; gap: 0.15rem; }
+}
+
+/* ========================================
+   About Page
+   ======================================== */
+
+.about-portrait {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   Utilities
+   ======================================== */
+
+.text-muted-warm { color: var(--text-muted); }

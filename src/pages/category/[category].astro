@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostMeta from '../../components/PostMeta.astro';
+import { postColor } from '../../utils/postColor';
+
+type Category = 'math' | 'cs' | 'essays' | 'misc';
+
+export async function getStaticPaths() {
+  return ['math', 'cs', 'essays', 'misc'].map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params as { category: Category };
+
+const allPosts = await getCollection('posts', ({ data }) =>
+  data.category === category && data.published !== false
+);
+const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const labels: Record<string, string> = {
+  math: 'Math', cs: 'CS', essays: 'Essays', misc: 'Misc',
+};
+
+const label = labels[category] ?? category;
+---
+
+<BaseLayout title={label}>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+
+        <h1 class="mb-1" style="font-size:1.6rem;">{label}</h1>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:3rem;">{posts.length} posts</p>
+
+        {posts.length === 0 ? (
+          <p style="color:var(--text-muted);">Nothing here yet.</p>
+        ) : (
+          <div class="row g-5">
+            {posts.map((post) => (
+              <div class="col-md-4">
+                <a href={`/posts/${post.slug}`} class="post-image-link">
+                  <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+                </a>
+                <div class="post-item mt-3">
+                  <a href={`/posts/${post.slug}`} class="post-item-title">{post.data.title}</a>
+                  <p class="post-item-excerpt mt-1">{post.data.description ?? ''}</p>
+                  <PostMeta date={post.data.date} readTime={post.data.readTime} />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div class="mt-5">
+          <a href="/writing" style="font-size:0.85rem;color:var(--text-muted);">← All writing</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>

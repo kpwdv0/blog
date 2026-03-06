@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostMeta from '../components/PostMeta.astro';
+import { postColor } from '../utils/postColor';
+
+const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
+const sorted = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const [featured, ...rest] = sorted;
+const recentPosts = rest.slice(0, 6);
+---
+
+<BaseLayout title="kira w.">
+  <section class="hero-section">
+    <div class="container">
+      <h1>kira w.</h1>
+      <p class="tagline">
+        sophomore · math · music · code
+      </p>
+      <div class="d-flex gap-4 mt-4" style="font-size:0.875rem;">
+        <a href="/writing">All writing</a>
+        <a href="/category/math">Math</a>
+        <a href="/category/cs">CS</a>
+        <a href="/category/essays">Essays</a>
+        <a href="/about">About</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container py-5">
+
+    {featured && (
+      <section class="mb-5">
+        <p class="section-label">Featured</p>
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-6">
+            <a href={`/posts/${featured.slug}`} class="post-image-link">
+              <div class="post-image-placeholder" style={`aspect-ratio:5/4;background-color:${postColor(featured.slug)};`}></div>
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a href={`/posts/${featured.slug}`} class="post-item-title" style="font-size:1.6rem;line-height:1.2;">{featured.data.title}</a>
+            <p class="post-item-excerpt mt-3" style="font-size:0.95rem;">{featured.data.description ?? ''}</p>
+            <PostMeta date={featured.data.date} readTime={featured.data.readTime} />
+          </div>
+        </div>
+      </section>
+    )}
+
+    {recentPosts.length > 0 && (
+      <section class="mb-5">
+        <div class="d-flex align-items-baseline justify-content-between mb-3">
+          <p class="section-label mb-0">Recent</p>
+          <a href="/writing" style="font-size:0.8rem;color:var(--text-muted);">All posts →</a>
+        </div>
+        <div class="row g-5">
+          {recentPosts.map((post) => (
+            <div class="col-md-4">
+              <a href={`/posts/${post.slug}`} class="post-image-link">
+                <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+              </a>
+              <div class="post-item mt-3">
+                <a href={`/posts/${post.slug}`} class="post-item-title">{post.data.title}</a>
+                <p class="post-item-excerpt mt-1">{post.data.description ?? ''}</p>
+                <PostMeta date={post.data.date} readTime={post.data.readTime} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+  </div>
+</BaseLayout>

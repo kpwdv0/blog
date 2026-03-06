@@ -1,0 +1,45 @@
+---
+import PostMeta from './PostMeta.astro';
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  title: string;
+  slug: string;
+  category: string;
+  excerpt: string;
+  date: Date;
+  readTime: number;
+  featured?: boolean;
+}
+
+const { title, slug, category, excerpt, date, readTime, featured = false } = Astro.props;
+---
+
+{featured ? (
+  <div class="post-card post-card-featured">
+    <div class="post-card-image">
+      <ImagePlaceholder label="Image" aspectRatio="auto" class="h-100" />
+    </div>
+    <div class="card-body">
+      <h2 class="card-title">
+        <a href={`/posts/${slug}`}>{title}</a>
+      </h2>
+      <p class="card-excerpt mt-1">{excerpt}</p>
+      <div class="mt-auto pt-3">
+        <PostMeta date={date} readTime={readTime} />
+      </div>
+    </div>
+  </div>
+) : (
+  <div class="post-card">
+    <div class="card-body">
+      <h3 class="card-title">
+        <a href={`/posts/${slug}`}>{title}</a>
+      </h3>
+      <p class="card-excerpt mt-1">{excerpt}</p>
+      <div class="mt-auto pt-3">
+        <PostMeta date={date} readTime={readTime} />
+      </div>
+    </div>
+  </div>
+)}

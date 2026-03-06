@@ -1,0 +1,59 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PostMeta from '../components/PostMeta.astro';
+
+interface Props {
+  title: string;
+  category: string;
+  date: Date;
+  readTime: number;
+  katex?: boolean;
+}
+
+const { title, category, date, readTime, katex = false } = Astro.props;
+const needsKatex = katex || ['math', 'cs'].includes(category);
+---
+
+<BaseLayout title={title}>
+  <Fragment slot="head">
+    {needsKatex && (
+      <>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous" />
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+          onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+      </>
+    )}
+  </Fragment>
+
+  <div class="container py-0">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="post-header text-center">
+          <h1>{title}</h1>
+          <div class="d-flex justify-content-center">
+            <PostMeta date={date} readTime={readTime} />
+          </div>
+        </div>
+
+        <article class="prose mx-auto">
+          <slot />
+        </article>
+
+        <hr style="border-color:var(--border);margin:3rem 0 1.5rem;" />
+        <a id="back-btn" href="/writing" style="font-size:0.85rem;color:var(--text-muted);">← Back</a>
+        <div class="pb-5"></div>
+
+        <script>
+          const btn = document.getElementById('back-btn');
+          const ref = document.referrer;
+          if (ref && new URL(ref).origin === location.origin) {
+            btn.addEventListener('click', (e) => { e.preventDefault(); history.back(); });
+          }
+        </script>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>
