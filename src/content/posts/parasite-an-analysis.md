@@ -1,10 +1,12 @@
 ---
 title: "parasite: an analysis"
-date: 2025-02-10
+date: 2026-02-26
 category: essays
 readTime: 10
 description: "my take on the best movie i've ever watched"
+thumbnail: /images/parasite/thumbnail.png
 ---
+![thumbnail](/images/parasite/thumbnail.png)
 Parasite is currently my all time favorite movies out of the many I've watched (this is sarcasm, the only movie I remember watching is the Minecraft Movie), and I thought to write something on it...
 
 This is the script for a youtube video, linked here: https://youtu.be/G5xCdKx4g5I

@@ -4,10 +4,9 @@ date: 2025-11-19
 category: math
 readTime: 8
 description: "working through a challenging integral."
+thumbnail: /images/solvingaparticularlyhardintegral/image.png
 ---
-
-Prerequisites: basic arithmetic
-
+![thumbnail](/images/solvingaparticularlyhardintegral/image.png)
 Last month, my friend at https://ceti.kaush.com/ sent me a particularly challenging integral. Back then, I had no idea how to approach the question — I barely knew what an integral even was.
 
 But I've done a lot since a month ago (mostly through Apostol Calc 1, recommended by the same friend), so I decided to revisit this and give it a shot. Ceti wrote a post on this himself, so if you're looking for something more coherent and organized, make sure to check that out!

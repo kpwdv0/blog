@@ -8,21 +8,17 @@ interface Props {
   date: Date;
   readTime: number;
   katex?: boolean;
+  thumbnail?: string;
 }
 
-const { title, category, date, readTime, katex = false } = Astro.props;
+const { title, category, date, readTime, katex = false, thumbnail } = Astro.props;
 const needsKatex = katex || ['math', 'cs'].includes(category);
 ---
 
 <BaseLayout title={title}>
   <Fragment slot="head">
     {needsKatex && (
-      <>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous" />
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"
-          onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
-      </>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous" />
     )}
   </Fragment>
 

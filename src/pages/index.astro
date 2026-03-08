@@ -6,8 +6,8 @@ import { postColor } from '../utils/postColor';
 
 const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
 const sorted = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const [featured, ...rest] = sorted;
-const recentPosts = rest.slice(0, 6);
+const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
+const recentPosts = sorted.filter((p) => p.slug !== featured.slug).slice(0, 6);
 ---
 
 <BaseLayout title="kira w.">
@@ -35,7 +35,10 @@ const recentPosts = rest.slice(0, 6);
         <div class="row g-5 align-items-center">
           <div class="col-lg-6">
             <a href={`/posts/${featured.slug}`} class="post-image-link">
-              <div class="post-image-placeholder" style={`aspect-ratio:5/4;background-color:${postColor(featured.slug)};`}></div>
+              {featured.data.thumbnail
+                ? <img src={featured.data.thumbnail} alt={featured.data.title} class="post-image-placeholder" style="object-fit:cover;aspect-ratio:5/4;" />
+                : <div class="post-image-placeholder" style={`aspect-ratio:5/4;background-color:${postColor(featured.slug)};`}></div>
+              }
             </a>
           </div>
           <div class="col-lg-6">
@@ -57,7 +60,10 @@ const recentPosts = rest.slice(0, 6);
           {recentPosts.map((post) => (
             <div class="col-md-4">
               <a href={`/posts/${post.slug}`} class="post-image-link">
-                <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+                {post.data.thumbnail
+                  ? <img src={post.data.thumbnail} alt={post.data.title} class="post-image-placeholder" style="object-fit:cover;" />
+                  : <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+                }
               </a>
               <div class="post-item mt-3">
                 <a href={`/posts/${post.slug}`} class="post-item-title">{post.data.title}</a>
