@@ -8,6 +8,8 @@ const posts = defineCollection({
     category: z.enum(['math', 'cs', 'essays', 'misc']),
     readTime: z.number().int().positive(),
     description: z.string().optional(),
+    thumbnail: z.string().optional(),
+    featured: z.boolean().default(false),
     published: z.boolean().default(true),
   }),
 });

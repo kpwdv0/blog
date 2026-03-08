@@ -1,18 +1,19 @@
 ---
 title: "linear regression with matrices and gradients"
-date: 2025-11-29
+date: 2025-12-29
 category: math
 readTime: 12
 description: "deriving the ordinary least squares formula from scratch using matrix calculus."
+thumbnail: /images/linearregwithmatricesandgradients/thumbnail.png
 ---
-
+![thumbnail](/images/linearregwithmatricesandgradients/thumbnail.png)
 ## 1. Introduction
 
 In computer science class, we briefly touched upon the idea about doing linear regression with matrices, but never truly learned how it worked. Instead, we only coded linear regression with gradient descent.
 
 And, on my airplane to my winter destination, seeing as I had pure, unfiltered time, I decided to take a closer look.
 
-This article is meant to be read with pencil and paper in hand (especially if these concepts are unfamiliar to you). Important passages will be marked with three exclamation points (!!!).
+This article is meant to be read with pencil and paper in hand (especially if these concepts are unfamiliar to you). 
 
 ## 2. Establishing our regression formula
 
@@ -42,6 +43,7 @@ $$
 $$
 
 As for matrix addition, we simply add up the corresponding elements:
+
 $$
 \begin{bmatrix}a & b\\c & d \end{bmatrix} + \begin{bmatrix}e & f\\g & h\end{bmatrix} = \begin{bmatrix}a+e & b+f\\c+g & d+h \end{bmatrix}
 $$

@@ -11,6 +11,8 @@
   "dependencies": {
     "@astrojs/db": "^0.14.4",
     "astro": "^5.0.0",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   }
 }

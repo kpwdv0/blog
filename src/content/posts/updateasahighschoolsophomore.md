@@ -4,7 +4,10 @@ date: 2025-11-27
 category: essays
 readTime: 3
 description: "a personal update: what i'm studying, what i'm playing, and where things are headed."
+thumbnail: /images/updateasahighschool/thumbnail.png
 ---
+
+![thumbnail](/images/updateasahighschool/thumbnail.png)
 
 This is technically my first post (if you don't count the write-up I did of that one integral), so I guess I have to introduce myself.
 

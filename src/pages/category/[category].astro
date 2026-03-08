@@ -39,7 +39,10 @@ const label = labels[category] ?? category;
             {posts.map((post) => (
               <div class="col-md-4">
                 <a href={`/posts/${post.slug}`} class="post-image-link">
-                  <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+                  {post.data.thumbnail
+                    ? <img src={post.data.thumbnail} alt={post.data.title} class="post-image-placeholder" style="object-fit:cover;" />
+                    : <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
+                  }
                 </a>
                 <div class="post-item mt-3">
                   <a href={`/posts/${post.slug}`} class="post-item-title">{post.data.title}</a>

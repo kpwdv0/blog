@@ -1,9 +1,10 @@
 ---
 title: "implicit 4D grapher"
-date: 2025-02-10
+date: 2026-02-10
 category: cs
 readTime: 15
 description: "building an interactive 4D grapher"
+thumbnail: /images/4dgrapher/thumbnail.png
 ---
 View the project here: https://4dgrapher.netlify.app/
 
@@ -26,7 +27,7 @@ $$
 y' = \frac{yd}{d-z}
 $$
 
-![Projection diagram](/images/proj.png)
+![Projection diagram](/images/4dgrapher/proj.png)
 
 The key idea is that points farther from the camera are scaled down. This formula is derived through similar triangles, pictured above.
 
@@ -102,17 +103,17 @@ Before anything I quickly coded up a rotating cube in 2D, just so I can make sur
 ### Day 2
 First, I tried to render a tesseract to test the full pipeline from 4D → 3D → 2D. I defined a hypercube's points and edges manually. The final algorithm was pretty simple: I wrote a draw loop that updated the rotations based on slider inputs every frame. Seeing it move correctly was very satisfying.
 
-![Tesseract rendering](/images/tesseract.png)
+![Tesseract rendering](/images/4dgrapher/tesseract.png)
 
 ### Day 3
 I added a textbox so the user could input any function! For now, functions had to be inputted in JS syntax (like math.cos()) and didn't support anything super fancy. I wasn't sure how to graph this continuously in 4D space, so I sampled random points, plugged them into the inputted function, and then graphed and displayed them. This led to a collection of points that sort-of resembled the function — if you squinted your eyes a little bit.
 
-![Point cloud rendering](/images/points.png)
+![Point cloud rendering](/images/4dgrapher/points.png)
 
 ### Day 4
 I was busy at school today, but I quickly coded a "mesh" that would connect neighboring points with lines and give the illusion of more continuity. This did not work. At all. Points only connected within the same $x$ value, producing a distorted mess...
 
-![Broken mesh rendering](/images/mesh.png)
+![Broken mesh rendering](/images/4dgrapher/mesh.png)
 
 ### Day 5
 After a little bit more research, I'm going to try and rewrite my code almost entirely using three.js. I also considered writing my own graphics engine, but using existing tools will let me focus more on usability. This was supposed to take a day. (spoiler: it did not).
@@ -128,7 +129,7 @@ User navigation is handled using OrbitControls, which implements a damped orbita
 ### Day 5 con't
 I attempted to triangulate neighboring vertices directly. After hours of debugging, I realized that I was trying to render around 1.5 million triangles (connecting every single set of neighboring vertices!!), which was far more than my GPU could handle.
 
-![GPU crash](/images/crash.png)
+![GPU crash](/images/4dgrapher/crash.png)
 
 ### Day 6
 I wanted something working with three.js, so for now, I just reverted back to my original points. It looks a lot better, I can render more points without it crashing and it looks pretty cohesive. I'm happy I got something to work.
@@ -138,7 +139,7 @@ To solve the triangle explosion problem, I'm going to use an algorithm called th
 
 Here's a high level explanation: let's use "marching squares" as an example, which is the same algorithm in 2D. First, we label a sample of points as being either "inside" or "outside" the function (whether it satisfies some condition of the function). Then, we draw a grid, and each square is stored in something called a voxel. For each "square" in that grid, we split them up into 16 cases, simplifying it to a different output per combination of points. Then, if we want, we can use linear interpolation to "smooth" out the points. The 3D version works exactly the same way, except we have 256 total configurations instead of 16.
 
-![2D marching squares](/images/2DMARCH.png)
+![2D marching squares](/images/4dgrapher/2DMARCH.png)
 
 More formally, marching cubes extracts an implicit surface from a scalar field, mapping $f:\mathbb{R}^3 \to \mathbb{R}$. This means that every point in 3D space gets assigned a single number.
 
@@ -164,7 +165,7 @@ $$
 
 This is what allows the surface to appear smooth rather than aligned to the grid. After computing all intersection points for a voxel, we connect them to form our surface!
 
-![3D marching cubes result](/images/3dmarch.png)
+![3D marching cubes result](/images/4dgrapher/3dmarch.png)
 
 A second lookup table, the triangle table, specifies how to connect the interpolated edge points into triangles for each of the 256 cases. These triangles are added to a global triangle list. Once all voxels are processed, the result is a triangle mesh approximating the implicit surface!
 
@@ -180,7 +181,7 @@ The new, improved (and finished!!!) algorithmic pipeline: define $f(x,y,z,w)$; c
 
 Changing $w$ or any of the rotation angles triggers the algorithm to run again and recompute the 3D surface. This allows interactive visualization of the 4D function.
 
-![Finished 4D grapher](/images/finish.png)
+![Finished 4D grapher](/images/4dgrapher/finish.png)
 
 I now have a working 4D grapher!
 
