@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --color-canvas-default: #FFF7ED;
+  --color-canvas-subtle: rgba(93, 76, 55, 0.04);
+  --color-canvas-inset: rgba(93, 76, 55, 0.06);
+  --color-fg-default: #5D4C37;
+  --color-fg-muted: #9C8B7A;
+  --color-fg-subtle: #9C8B7A;
+  --color-border-default: rgba(93, 76, 55, 0.2);
+  --color-border-muted: rgba(93, 76, 55, 0.12);
+  --color-neutral-muted: rgba(93, 76, 55, 0.08);
+  --color-accent-fg: #5D4C37;
+  --color-accent-emphasis: #5D4C37;
+  --color-btn-bg: #FFF7ED;
+  --color-btn-border: rgba(93, 76, 55, 0.2);
+  --color-btn-hover-bg: rgba(93, 76, 55, 0.06);
+  --color-btn-primary-bg: #5D4C37;
+  --color-btn-primary-text: #FFF7ED;
+  --color-btn-primary-border: #5D4C37;
+  --color-btn-primary-hover-bg: #4a3c2a;
+  --color-input-bg: #FFF7ED;
+  --color-input-border: rgba(93, 76, 55, 0.2);
+  --color-prettylights-syntax-comment: #9C8B7A;
+}
+
+body,
+.gsc-comment-box-textarea,
+.gsc-comment-content,
+input,
+textarea,
+button {
+  font-family: 'Spectral', serif !important;
+  font-weight: 600;
+  color: #5D4C37;
+}
+
+.gsc-comment-author,
+.gsc-reply-author,
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', serif !important;
+  font-weight: 700;
+}
