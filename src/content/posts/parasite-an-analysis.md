@@ -2,7 +2,7 @@
 title: "parasite: an analysis"
 date: 2026-02-26
 category: essays
-readTime: 10
+readTime: 5
 description: "my take on the best movie i've ever watched"
 thumbnail: /images/parasite/thumbnail.png
 ---

@@ -15,6 +15,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+body { overflow-x: hidden; }
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -239,6 +241,9 @@ a:hover {
 
 .prose pre code { background: none; padding: 0; }
 
+.prose .katex-display { overflow-x: auto; overflow-y: hidden; }
+.prose .katex { white-space: normal; }
+
 .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
 .prose li { margin-bottom: 0.4rem; }
 
@@ -346,6 +351,15 @@ a:hover {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
+}
+
+/* ========================================
+   Giscus
+   ======================================== */
+
+.giscus, .giscus-frame {
+  width: 100% !important;
+  max-width: 100%;
 }
 
 /* ========================================
