@@ -1,18 +1,18 @@
 // Warm muted tones — each post gets one consistently based on its slug
 const palette = [
-  '#D6C8B8',
-  '#C8B8A8',
-  '#BEB0A0',
-  '#D0BEB0',
-  '#C4B4A4',
-  '#CCBCAC',
-  '#BAA898',
-  '#D8C4B0',
-  '#C6B2A0',
-  '#D2C0AE',
-  '#C0AE9E',
-  '#CABAB0',
-  '#D4C2B4',
+  '#D4D4D4',
+  '#C8C8C8',
+  '#BEBEBE',
+  '#D0D0D0',
+  '#C4C4C4',
+  '#CCCCCC',
+  '#BABABA',
+  '#D8D8D8',
+  '#C6C6C6',
+  '#D2D2D2',
+  '#C0C0C0',
+  '#CACACA',
+  '#DCDCDC',
 ];
 
 export function postColor(slug: string): string {

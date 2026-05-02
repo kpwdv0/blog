@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fmtShort } from '../../utils/dateFormat';
 
 const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
 const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -14,32 +15,68 @@ const byYear = posts.reduce<Record<string, typeof posts>>((acc, post) => {
 
 const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 
-function fmt(date: Date) {
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-}
+const categories = ['all', 'math', 'cs', 'essays'];
 ---
 
 <BaseLayout title="Writing">
   <div class="container py-5">
     <div class="row justify-content-center">
-      <div class="col-lg-7">
+      <div class="col-12">
 
-        <h1 class="mb-1" style="font-size:1.6rem;">Writing</h1>
-        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:3rem;">{posts.length} posts</p>
+        <h1 class="mb-1" style="font-size:1rem;font-weight:700;">writing</h1>
+        <p style="color:var(--text-muted);font-size:0.72rem;margin-bottom:1.75rem;">{posts.length} posts</p>
 
-        {years.map((year) => (
-          <div class="year-group">
-            <p class="year-heading">{year}</p>
-            {byYear[year].map((post) => (
-              <div class="post-list-item">
-                <span class="post-list-date">{fmt(post.data.date)}</span>
-                <a href={`/posts/${post.slug}`} class="post-list-title">{post.data.title}</a>
-              </div>
-            ))}
-          </div>
-        ))}
+        <div class="filter-bar">
+          {categories.map((cat) => (
+            <button class:list={['filter-btn', { active: cat === 'all' }]} data-filter={cat}>
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div id="post-list">
+          {years.map((year) => (
+            <div class="year-group" data-year={year}>
+              <p class="year-heading">{year}</p>
+              {byYear[year].map((post) => (
+                <div class="post-list-item" data-category={post.data.category}>
+                  <span class="post-list-date">{fmtShort(post.data.date)}</span>
+                  <a href={`/posts/${post.slug}`} class="post-list-title">{post.data.title}</a>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
 
       </div>
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+  const items = document.querySelectorAll<HTMLElement>('.post-list-item[data-category]');
+  const yearGroups = document.querySelectorAll<HTMLElement>('.year-group[data-year]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter!;
+
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      items.forEach((item) => {
+        item.style.display =
+          filter === 'all' || item.dataset.category === filter ? '' : 'none';
+      });
+
+      yearGroups.forEach((group) => {
+        let anyVisible = false;
+        for (const el of group.querySelectorAll<HTMLElement>('.post-list-item')) {
+          if (el.style.display !== 'none') { anyVisible = true; break; }
+        }
+        group.style.display = anyVisible ? '' : 'none';
+      });
+    });
+  });
+</script>

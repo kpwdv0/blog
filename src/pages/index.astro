@@ -2,50 +2,53 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostMeta from '../components/PostMeta.astro';
-import { postColor } from '../utils/postColor';
+import { fmtShort } from '../utils/dateFormat';
 
 const allPosts = await getCollection('posts', ({ data }) => data.published !== false);
 const sorted = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
-const recentPosts = sorted.filter((p) => p.slug !== featured.slug).slice(0, 6);
+const recentPosts = sorted.filter((p) => p.slug !== featured.slug).slice(0, 8);
 ---
 
-<BaseLayout title="kira w.">
+<BaseLayout title="kpwd">
   <section class="hero-section">
     <div class="container">
       <h1>kira w.</h1>
-      <p class="tagline">
-        sophomore · math · music · code
-      </p>
-      <div class="d-flex gap-4 mt-4" style="font-size:0.875rem;">
-        <a href="/writing">All writing</a>
-        <a href="/category/math">Math</a>
-        <a href="/category/cs">CS</a>
-        <a href="/category/essays">Essays</a>
-        <a href="/about">About</a>
-      </div>
+      <p class="tagline">sophomore · math · music · code</p>
     </div>
   </section>
 
   <div class="container py-5">
 
+    <section class="mb-5">
+      <p class="section-label">About</p>
+      <p style="font-size:0.82rem;line-height:1.8;margin-bottom:0.85rem;color:var(--text);">
+        Hello world! I'm Kira. I started this blog because I think it's cool that a little corner
+        of the infinitely expanding internet is mine. I'm a Neovim user, a student, a pianist,
+        and I occasionally do math and code (I make silly little apps). Maybe I'm mediocre at a lot
+        of them, but I really love learning and sharing my ideas :)
+      </p>
+      <p style="font-size:0.82rem;line-height:1.8;margin-bottom:0.85rem;color:var(--text);">
+        Right now I'm still trying to figure things out. I'm not really sure what I enjoy, or what
+        I want to do when I'm older, but I'm trying to explore as many things as I can. I'm currently
+        trying to learn Rust, linear regression, and physics through textbooks or online sources.
+        I'm also just getting into Thinkpad modding!! I'm always super busy, but I'm doing my best
+        to stay curious.
+      </p>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0;">
+        → <button id="email-btn" style="background:none;border:none;padding:0;font-family:inherit;font-size:inherit;color:var(--text-muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px;text-decoration-color:rgba(128,128,128,0.35);">kikisadventures37 [at] gmail [dot] com</button>
+      </p>
+    </section>
+
     {featured && (
       <section class="mb-5">
         <p class="section-label">Featured</p>
-        <div class="row g-5 align-items-center">
-          <div class="col-lg-6">
-            <a href={`/posts/${featured.slug}`} class="post-image-link">
-              {featured.data.thumbnail
-                ? <img src={featured.data.thumbnail} alt={featured.data.title} class="post-image-placeholder" style="object-fit:cover;aspect-ratio:5/4;" />
-                : <div class="post-image-placeholder" style={`aspect-ratio:5/4;background-color:${postColor(featured.slug)};`}></div>
-              }
-            </a>
-          </div>
-          <div class="col-lg-6">
-            <a href={`/posts/${featured.slug}`} class="post-item-title" style="font-size:1.6rem;line-height:1.2;">{featured.data.title}</a>
-            <p class="post-item-excerpt mt-3" style="font-size:0.95rem;">{featured.data.description ?? ''}</p>
-            <PostMeta date={featured.data.date} readTime={featured.data.readTime} />
-          </div>
+        <div class="post-item post-item-featured">
+          <a href={`/posts/${featured.slug}`} class="post-item-title" style="font-size:0.9rem;">{featured.data.title}</a>
+          {featured.data.description && (
+            <p class="post-item-excerpt mt-2">{featured.data.description}</p>
+          )}
+          <PostMeta date={featured.data.date} readTime={featured.data.readTime} />
         </div>
       </section>
     )}
@@ -54,22 +57,13 @@ const recentPosts = sorted.filter((p) => p.slug !== featured.slug).slice(0, 6);
       <section class="mb-5">
         <div class="d-flex align-items-baseline justify-content-between mb-3">
           <p class="section-label mb-0">Recent</p>
-          <a href="/writing" style="font-size:0.8rem;color:var(--text-muted);">All posts →</a>
+          <a href="/writing" style="font-size:0.72rem;color:var(--text-muted);text-decoration:none;">all posts →</a>
         </div>
-        <div class="row g-5">
+        <div class="post-index-list">
           {recentPosts.map((post) => (
-            <div class="col-md-4">
-              <a href={`/posts/${post.slug}`} class="post-image-link">
-                {post.data.thumbnail
-                  ? <img src={post.data.thumbnail} alt={post.data.title} class="post-image-placeholder" style="object-fit:cover;" />
-                  : <div class="post-image-placeholder" style={`background-color:${postColor(post.slug)};`}></div>
-                }
-              </a>
-              <div class="post-item mt-3">
-                <a href={`/posts/${post.slug}`} class="post-item-title">{post.data.title}</a>
-                <p class="post-item-excerpt mt-1">{post.data.description ?? ''}</p>
-                <PostMeta date={post.data.date} readTime={post.data.readTime} />
-              </div>
+            <div class="post-index-row">
+              <span class="post-index-date">{fmtShort(post.data.date)}</span>
+              <a href={`/posts/${post.slug}`} class="post-list-title">{post.data.title}</a>
             </div>
           ))}
         </div>
@@ -78,3 +72,19 @@ const recentPosts = sorted.filter((p) => p.slug !== featured.slug).slice(0, 6);
 
   </div>
 </BaseLayout>
+
+<script>
+  const btn = document.getElementById('email-btn')!;
+  const email = 'kikisadventures37@gmail.com';
+  const original = btn.textContent!;
+
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(email);
+    btn.textContent = 'copied!';
+    btn.style.textDecorationColor = 'currentColor';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.textDecorationColor = 'rgba(128,128,128,0.35)';
+    }, 1400);
+  });
+</script>

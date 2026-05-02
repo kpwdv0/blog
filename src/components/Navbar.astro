@@ -1,45 +1,86 @@
 ---
-const navLinks = [
-  { href: '/writing', label: 'Writing' },
-  { href: '/category/math', label: 'Math' },
-  { href: '/category/cs', label: 'CS' },
-  { href: '/category/essays', label: 'Essays' },
-  { href: '/about', label: 'About' },
-];
-
 const currentPath = Astro.url.pathname;
 ---
 
 <nav class="navbar navbar-expand-md blog-navbar sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="/">kira w.</a>
+    <a class="navbar-brand" href="/">$ kpwd</a>
 
-    <button
-      class="navbar-toggler border-0"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#mainNav"
-      aria-controls="mainNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      style="box-shadow:none;"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto gap-1">
-        {navLinks.map(({ href, label }) => (
+    <div class="d-flex align-items-center gap-2 ms-auto">
+      <div class="collapse navbar-collapse me-2" id="mainNav">
+        <ul class="navbar-nav gap-1">
           <li class="nav-item">
-            <a
-              class:list={['nav-link', { active: currentPath.startsWith(href) }]}
-              href={href}
-            >
-              {label}
+            <a class:list={['nav-link', { active: currentPath.startsWith('/writing') || currentPath.startsWith('/posts') }]} href="/writing">
+              writing
             </a>
           </li>
-        ))}
-      </ul>
+        </ul>
+      </div>
+
+      <button
+        id="theme-toggle"
+        class="theme-toggle"
+        aria-label="Toggle dark mode"
+      >
+        dark
+      </button>
+
+      <button
+        class="navbar-toggler border-0 ms-1"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#mainNav"
+        aria-controls="mainNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        style="box-shadow:none;"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<script>
+  const toggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+  const html = document.documentElement;
+
+  function updateLabel() {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    toggle.textContent = isDark ? 'light' : 'dark';
+  }
+
+  updateLabel();
+
+  let animating = false;
+  toggle.addEventListener('click', () => {
+    if (animating) return;
+    animating = true;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+
+    // E-ink refresh flash: black when going dark, white when going light
+    const overlay = document.createElement('div');
+    overlay.style.cssText =
+      'position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.04s;background:' +
+      (isDark ? '#fff' : '#000');
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      setTimeout(() => {
+        const next = isDark ? 'light' : 'dark';
+        if (next === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+        } else {
+          html.removeAttribute('data-theme');
+        }
+        localStorage.setItem('theme', next);
+        updateLabel();
+
+        overlay.style.transition = 'opacity 0.07s';
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.remove(); animating = false; }, 80);
+      }, 70);
+    });
+  });
+</script>

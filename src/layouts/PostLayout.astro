@@ -15,6 +15,8 @@ const { title, category, date, readTime, katex = false, thumbnail } = Astro.prop
 const needsKatex = katex || ['math', 'cs'].includes(category);
 ---
 
+<div id="progress-bar" style="position:fixed;top:0;left:0;width:0%;height:2px;background:var(--text);z-index:9998;pointer-events:none;"></div>
+
 <BaseLayout title={title}>
   <Fragment slot="head">
     {needsKatex && (
@@ -24,16 +26,14 @@ const needsKatex = katex || ['math', 'cs'].includes(category);
 
   <div class="container py-0">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
+      <div class="col-12">
 
-        <div class="post-header text-center">
+        <div class="post-header">
           <h1>{title}</h1>
-          <div class="d-flex justify-content-center">
-            <PostMeta date={date} readTime={readTime} />
-          </div>
+          <PostMeta date={date} readTime={readTime} />
         </div>
 
-        <article class="prose mx-auto">
+        <article class="prose">
           <slot />
         </article>
 
@@ -66,6 +66,14 @@ const needsKatex = katex || ['math', 'cs'].includes(category);
           if (ref && new URL(ref).origin === location.origin) {
             btn.addEventListener('click', (e) => { e.preventDefault(); history.back(); });
           }
+
+          const bar = document.getElementById('progress-bar')!;
+          const doc = document.documentElement;
+          let maxScroll = doc.scrollHeight - doc.clientHeight;
+          window.addEventListener('resize', () => { maxScroll = doc.scrollHeight - doc.clientHeight; }, { passive: true });
+          window.addEventListener('scroll', () => {
+            bar.style.width = Math.min(doc.scrollTop / maxScroll * 100, 100) + '%';
+          }, { passive: true });
         </script>
 
       </div>
