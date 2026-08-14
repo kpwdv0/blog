@@ -32,9 +32,6 @@ Working on a research project on anticipatory music transformers. Like all other
 ## Music
 I'm currently working towards my ABRSM piano diploma, as well as learning a few new pieces (Chopin Ballade no.1; I need to learn a concerto and I adore the Rachmaninoff so probably that, as well as some others). I'm also learning and horribly butchering the Bruch violin concerto.
 
-## The Pi Project
-I'm starting a math camp for underserved students with my friends called the Pi Project (my dog is named Pi!) ([piprojectcamp.org](https://piprojectcamp.org)). I'm trying not to take it too seriously, and it's a lot of fun to work on something with my friends. I'm in charge of the tech, which I've basically built all of.
-
 ## Hanging out with my friends!!!
 This summer, I've been trying to go outside and hang with my friends more. I'm going to Coney Island today with my boyfriend. I've also had a picnic during the NYPhil concert in the part (we made hwachae hehe), had lunch with some friends, had a board game/video game night with my entire friend group… I'm planning on hosting a tea party sometime this summer too!!
 
