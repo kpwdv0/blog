@@ -6,7 +6,7 @@ readTime: 15
 description: "building an interactive 4D grapher"
 thumbnail: /images/4dgrapher/thumbnail.png
 ---
-View the project here: https://4dgrapher.netlify.app/
+View the project here: https://4dgrapher.bykira.me/
 
 ## Introduction
 Objects live in $\mathbb{R}^4$ (the fourth dimension) with coordinates $(x,y,z,w)$.
